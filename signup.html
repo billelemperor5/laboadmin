@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>Nedjma Signup</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <style>
+    :root{
+      --primary:#0f766e;
+      --accent:#ff6c00;
+      --bg:#f0f2f5;
+      --card:#ffffff;
+      --border-color:#e5e7eb;
+      --text-primary:#111827;
+      --muted:#6b7280;
+    }
+    body{
+      margin:0;
+      font-family:'Tajawal',sans-serif;
+      background:var(--bg);
+      color:var(--text-primary);
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+    .auth-shell{
+      width:100%;
+      max-width:420px;
+      padding:16px;
+    }
+    .auth-card{
+      background:var(--card);
+      border-radius:20px;
+      padding:24px 20px 20px;
+      box-shadow:0 18px 45px rgba(15,23,42,0.15);
+      border:1px solid var(--border-color);
+      position:relative;
+      overflow:hidden;
+    }
+    .auth-card::before{
+      content:'';
+      position:absolute;
+      inset-inline-start:-40px;
+      bottom:-40px;
+      width:160px;
+      height:160px;
+      border-radius:999px;
+      background:radial-gradient(circle at 30% 30%,rgba(248,113,22,.25),transparent 60%);
+    }
+    .auth-header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      margin-bottom:18px;
+      position:relative;
+      z-index:1;
+    }
+    .auth-brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+    .auth-logo{
+      width:42px;
+      height:42px;
+      border-radius:14px;
+      overflow:hidden;
+      background:var(--accent);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+    .auth-logo img{width:100%;height:100%;object-fit:cover;}
+    .auth-title{
+      margin:0;
+      font-weight:800;
+      font-size:18px;
+    }
+    .auth-sub{
+      margin:2px 0 0;
+      font-size:12px;
+      color:var(--muted);
+    }
+    .auth-toggle{
+      font-size:12px;
+      color:var(--muted);
+    }
+    .auth-toggle a{
+      color:var(--accent);
+      text-decoration:none;
+      font-weight:700;
+    }
+    .auth-form{
+      position:relative;
+      z-index:1;
+    }
+    .input-wrap{
+      position:relative;
+      margin-bottom:12px;
+    }
+    .input-wrap input{
+      width:100%;
+      padding:11px 40px;
+      border-radius:12px;
+      border:1px solid var(--border-color);
+      background:#f9fafb;
+      font-family:inherit;
+      box-sizing:border-box;
+      outline:none;
+    }
+    .input-wrap input:focus{
+      border-color:var(--primary);
+      box-shadow:0 0 0 1px rgba(15,118,110,.1);
+      background:#ffffff;
+    }
+    .input-icon-left{
+      position:absolute;
+      inset-inline-start:12px;
+      top:50%;
+      transform:translateY(-50%);
+      color:var(--muted);
+      font-size:14px;
+    }
+    .field-label{
+      font-size:13px;
+      font-weight:700;
+      margin-bottom:4px;
+      color:var(--text-primary);
+    }
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:6px;
+      border:none;
+      border-radius:999px;
+      padding:11px 16px;
+      font-family:inherit;
+      font-size:14px;
+      font-weight:800;
+      cursor:pointer;
+    }
+    .btn-primary{
+      width:100%;
+      background:linear-gradient(135deg,#f97316,#ea580c);
+      color:#fff;
+      box-shadow:0 14px 30px rgba(234,88,12,.35);
+    }
+    .auth-footer{
+      margin-top:12px;
+      font-size:12px;
+      color:var(--muted);
+      text-align:center;
+    }
+    .error-msg{
+      margin:0 0 10px;
+      font-size:12px;
+      color:#b91c1c;
+      background:#fee2e2;
+      border-radius:10px;
+      padding:8px 10px;
+      display:none;
+    }
+    .error-msg.visible{display:block;}
+    .auth-lang-toggle{
+      margin-top:14px;
+      display:flex;
+      justify-content:center;
+      gap:8px;
+      font-size:12px;
+    }
+    .lang-btn{
+      border-radius:999px;
+      border:1px solid var(--border-color);
+      padding:4px 10px;
+      background:#f9fafb;
+      cursor:pointer;
+      font-family:inherit;
+    }
+    .lang-btn.active{
+      background:var(--accent);
+      color:#fff;
+      border-color:var(--accent);
+    }
+  </style>
+</head>
+<body>
+  <div class="auth-shell">
+    <div class="auth-card">
+      <div class="auth-header">
+        <div class="auth-brand">
+          <div class="auth-logo">
+            <img src="images/logo.png" alt="Nedjma Logo">
+          </div>
+          <div>
+            <h1 id="signupTitle" class="auth-title">إنشاء حساب جديد</h1>
+            <p id="signupSubtitle" class="auth-sub">حساب واحد للوحتين الإدارة والعامل</p>
+          </div>
+        </div>
+        <div class="auth-toggle">
+          <span id="signupSwitchText">لديك حساب؟</span>
+          <a id="signupSwitchLink" href="login.html">تسجيل الدخول</a>
+        </div>
+      </div>
+
+      <form id="signupForm" class="auth-form">
+        <p id="signupError" class="error-msg"></p>
+        <div>
+          <div id="signupNameLabel" class="field-label">الاسم الكامل</div>
+          <div class="input-wrap">
+            <i class="fas fa-user input-icon-left"></i>
+            <input type="text" id="signupName" required autocomplete="name" />
+          </div>
+        </div>
+        <div>
+          <div id="signupEmailLabel" class="field-label">البريد الإلكتروني</div>
+          <div class="input-wrap">
+            <i class="fas fa-envelope input-icon-left"></i>
+            <input type="email" id="signupEmail" required autocomplete="email" />
+          </div>
+        </div>
+        <div>
+          <div id="signupPasswordLabel" class="field-label">كلمة المرور</div>
+          <div class="input-wrap">
+            <i class="fas fa-lock input-icon-left"></i>
+            <input type="password" id="signupPassword" required autocomplete="new-password" />
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary">
+          <i class="fas fa-user-plus"></i>
+          <span id="signupSubmitText">إنشاء الحساب</span>
+        </button>
+      </form>
+
+      <div class="auth-footer">
+        <span id="signupFooterText">بإنشاء الحساب، توافق على استخدام بياناتك داخل تطبيق Nedjma فقط.</span>
+      </div>
+
+      <div class="auth-lang-toggle">
+        <button type="button" class="lang-btn" data-lang="ar">العربية</button>
+        <button type="button" class="lang-btn" data-lang="en">English</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      const strings = {
+        ar: {
+          title: 'إنشاء حساب جديد',
+          subtitle: 'حساب واحد للوحتين الإدارة والعامل',
+          switchText: 'لديك حساب؟',
+          switchLink: 'تسجيل الدخول',
+          nameLabel: 'الاسم الكامل',
+          emailLabel: 'البريد الإلكتروني',
+          passwordLabel: 'كلمة المرور',
+          submit: 'إنشاء الحساب',
+          footer: 'بإنشاء الحساب، توافق على استخدام بياناتك داخل تطبيق Nedjma فقط.'
+        },
+        en: {
+          title: 'Create a new account',
+          subtitle: 'One account for Manager and Worker apps',
+          switchText: 'Already have an account?',
+          switchLink: 'Sign in',
+          nameLabel: 'Full name',
+          emailLabel: 'Email address',
+          passwordLabel: 'Password',
+          submit: 'Sign up',
+          footer: 'By creating an account you agree to use your data only inside Nedjma apps.'
+        }
+      };
+      const htmlEl = document.documentElement;
+      const langBtns = document.querySelectorAll('.lang-btn');
+      const els = {
+        title: document.getElementById('signupTitle'),
+        subtitle: document.getElementById('signupSubtitle'),
+        switchText: document.getElementById('signupSwitchText'),
+        switchLink: document.getElementById('signupSwitchLink'),
+        nameLabel: document.getElementById('signupNameLabel'),
+        emailLabel: document.getElementById('signupEmailLabel'),
+        passwordLabel: document.getElementById('signupPasswordLabel'),
+        submit: document.getElementById('signupSubmitText'),
+        footer: document.getElementById('signupFooterText')
+      };
+      function applyLang(lang){
+        const l = lang === 'en' ? 'en' : 'ar';
+        const s = strings[l];
+        if (!s) return;
+        htmlEl.lang = l === 'en' ? 'en' : 'ar';
+        htmlEl.dir = l === 'en' ? 'ltr' : 'rtl';
+        if (els.title) els.title.textContent = s.title;
+        if (els.subtitle) els.subtitle.textContent = s.subtitle;
+        if (els.switchText) els.switchText.textContent = s.switchText;
+        if (els.switchLink) els.switchLink.textContent = s.switchLink;
+        if (els.nameLabel) els.nameLabel.textContent = s.nameLabel;
+        if (els.emailLabel) els.emailLabel.textContent = s.emailLabel;
+        if (els.passwordLabel) els.passwordLabel.textContent = s.passwordLabel;
+        if (els.submit) els.submit.textContent = s.submit;
+        if (els.footer) els.footer.textContent = s.footer;
+        langBtns.forEach(btn=>{
+          btn.classList.toggle('active', btn.dataset.lang === l);
+        });
+        try{ localStorage.setItem('app-lang', l); }catch(_){}
+      }
+      const initial = (function(){
+        try { return localStorage.getItem('app-lang') || 'ar'; } catch(_) { return 'ar'; }
+      })();
+      applyLang(initial);
+      langBtns.forEach(btn=>{
+        btn.addEventListener('click', ()=>applyLang(btn.dataset.lang));
+      });
+    })();
+  </script>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-analytics.js";
+    import { getAuth, createUserWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCDc2W1XbKMb9jWMGkoXjNZW0hjNXLF5wk",
+      authDomain: "nedjma-connect.firebaseapp.com",
+      projectId: "nedjma-connect",
+      storageBucket: "nedjma-connect.firebasestorage.app",
+      messagingSenderId: "972148279074",
+      appId: "1:972148279074:web:c7c4a2ebe64a497d6fc77b",
+      measurementId: "G-KEV2FMTL7B"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    try { getAnalytics(app); } catch (_) {}
+    const auth = getAuth(app);
+
+    const form = document.getElementById('signupForm');
+    const nameInput = document.getElementById('signupName');
+    const emailInput = document.getElementById('signupEmail');
+    const passInput = document.getElementById('signupPassword');
+    const errorBox = document.getElementById('signupError');
+
+    const showError = (msg) => {
+      if (!errorBox) return;
+      errorBox.textContent = msg;
+      errorBox.classList.add('visible');
+    };
+
+    form?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      errorBox?.classList.remove('visible');
+      const name = nameInput?.value.trim();
+      const email = emailInput?.value.trim();
+      const password = passInput?.value;
+      if (!name || !email || !password) {
+        showError('الرجاء ملء جميع الحقول.');
+        return;
+      }
+      if (password.length < 6) {
+        showError('كلمة المرور يجب أن تكون 6 أحرف على الأقل.');
+        return;
+      }
+      createUserWithEmailAndPassword(auth, email, password)
+        .then((cred) => {
+          if (cred.user && name) {
+            updateProfile(cred.user, { displayName: name }).catch(()=>{});
+          }
+          try {
+            const info = { name, email };
+            localStorage.setItem('nedjmaUser', JSON.stringify(info));
+          } catch (_) {}
+          try { localStorage.setItem('nedjmaLoginEvent', 'signup'); } catch (_) {}
+          // بعد إنشاء الحساب نوجّه المستخدم مباشرة إلى لوحة الإدارة
+          window.location.href = 'projet.html';
+        })
+        .catch((err) => {
+          console.error(err);
+          showError('تعذر إنشاء الحساب، تأكد من البريد أو جرّب لاحقاً.');
+        });
+    });
+  </script>
+</body>
+</html>
